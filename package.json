@@ -10,7 +10,9 @@
     "test": "node --test",
     "build": "node tools/build.js"
   },
-  "keywords": [],
+  "keywords": [
+    "markdown"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
