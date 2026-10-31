@@ -9,6 +9,7 @@ jobs:
   build:
     name: build-and-test
     runs-on: ubuntu-24.04
+    if: github.event_name != 'schedule'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
