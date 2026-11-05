@@ -3,7 +3,7 @@ OUT_DIR := out
 SOURCES := $(wildcard $(SRC_DIR)/*.md)
 OUTPUTS := $(patsubst $(SRC_DIR)/%.md,$(OUT_DIR)/%.html,$(SOURCES))
 
-.PHONY: all check build test clean ci help deps package
+.PHONY: all check build test clean ci help deps package lint
 
 all: test  ## build and test everything (default)
 
@@ -36,7 +36,10 @@ package: test  ## produce the versioned artifact
 clean:  ## remove all generated files
 	rm -rf $(OUT_DIR) *.tgz
 
-ci: clean deps check test package  ## the build server entry point
+ci: clean deps check lint test package  ## the build server entry point
 
 help:  ## show this help
 	@grep -E '^[a-z][a-zA-Z_-]*:.*?## ' $(MAKEFILE_LIST) | sed 's/:.*## /\t/' | column -t -s "$$(printf '\t')"
+
+lint: node_modules  ## static analysis: seconds, so it runs first
+	npm run --silent lint
